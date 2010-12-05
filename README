@@ -1,1 +1,7 @@
-gin.js a js library
+************************************************************
+** gin.js a js library **
+************************************************************
+
+-- Tests are written using JSTestDriver http://code.google.com/p/js-test-driver/
+  - starting test server: java -jar $JSTESTDRIVER_HOME/JsTestDriver-1.2.1.jar --tests all
+  - using jstdutil (gem install jstdutil): jstestdriver --config path/to/file.conf --tests all
