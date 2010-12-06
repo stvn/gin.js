@@ -9,6 +9,24 @@ TestCase('gin', {
 
   'test should have a NS function': function() {
     assertFunction(gin.ns);
+  },
+
+  'test should create an empty object literal that is namespaced': function() {
+    gin.ns('test.ns');
+    assertObject(test.ns);
+  },
+
+  'test should create an object with properties and metods that is namespaced': function() {
+    gin.ns('test.ns.a', { prop1: 5, prop2: 6 });
+    assertEquals(5, test.ns.a.prop1);
+    assertEquals(6, test.ns.a.prop2);
+  },
+
+  'test should create a constructor function that is namespaced': function() {
+    gin.ns('test.ns.B', function(){ this.prop1 = 5; this.prop2 = 6; });
+    var obj = new test.ns.B();
+    assertEquals(5, obj.prop1);
+    assertEquals(6, obj.prop2);
   }
 });
 
@@ -32,12 +50,11 @@ TestCase('gin.oo', {
   'test should have a _SUPER function': function() {
     assertFunction(gin.oo._super)
   }
-
 });
 
 TestCase('gin.Class', {
   setUp: function() {
-    this.BaseClass = new gin.Class({declaredClass: 'BaseClass'});
+    this.BaseClass = new gin.Class('ns.BaseClass', {declaredClass: 'BaseClass'});
   },
 
   tearDown: function() {
@@ -55,14 +72,14 @@ TestCase('gin.Class', {
   },
 
   'test should create a new subclass': function() {
-    var ExtClass = new gin.Class(this.BaseClass, {
+    var ExtClass = new gin.Class('ns.ExtClass', this.BaseClass, {
       declaredClass: 'ExtClass'
     });
     assertFunction(ExtClass);
   },
 
   'test should insure new subclass can be instantiated and has access to its super': function() {
-    var ExtClass = new gin.Class(this.BaseClass, {
+    var ExtClass = new gin.Class('ns.ExtClass', this.BaseClass, {
           declaredClass: 'ExtClass'
         });
     var testObj = new ExtClass();
@@ -74,7 +91,7 @@ TestCase('gin.Class', {
 
   'test should call init when instantiated': function() {
     var value = null,
-        TestClass = new gin.Class({
+        TestClass = new gin.Class('gn.TestClass',{
           init: function() {
             value = 'working';
           }
@@ -105,15 +122,79 @@ TestCase('gin.enumerable', {
     assertFunction(gin.enumerable.filter);
   },
 
+  'test shoud have a DETECT function': function() {
+    assertFunction(gin.enumerable.detect);
+  },
+
+  'test should have a CHAIN function': function() {
+  
+  },
+
   'test should iterate through collection calling callback using each function': function() {
-    var testArray1 = [1, 2, 3, 4, 5],
-        testArray2 = [];
-
-    gin.enumerable.each(testArray1, function(num){
-      testArray2.push(num);
+    var array1 = [1, 2, 3, 4, 5],
+        array2 = [];
+    gin.enumerable.each(array1, function(num){
+      array2.push(num);
     });
-    assertEquals(testArray1, testArray2);
+    assertEquals(array1, array2);
+  },
+
+  'test should interate with map': function() {
+    var array1 = [1, 2, 3, 4, 5],
+        array2;
+    array2 = gin.enumerable.map(array1, function(num){
+      return num + 1;
+    });
+    assertEquals([2,3,4,5,6], array2);
+  },
+
+  'test should iterate and return a filtered array': function() {
+    var array1 = [1, 2, 3, 4, 5],
+        array2;
+    array2 = gin.enumerable.filter(array1, function(num) {
+      return num > 1 && num < 4;
+    });
+    assertEquals([2,3], array2);
+  },
+
+  'test should iterate and return the result detect': function() {
+    var array1 = ['mo', 'larry', 'curly'],
+        result;
+
+    result = gin.enumerable.detect(array1, function(name){
+      return name === 'larry';
+    });
+    assertEquals('larry', result);
+  },
+
+  'test should be able to chain enumerable methods': function() {
+    var array1 = ['mo', 'larry', 'curly'],
+        result;
+    result = gin.enumerable.chain(array1).select(function(name){
+      return name === 'mo' || name === 'curly';
+    }).detect(function(name){
+      return name === 'curly';
+    }).values();
+    assertEquals('curly', result);
   }
-
-
 });
+
+TestCase('gin.events', {
+  'test should be defined': function() {
+    assertObject(gin.events);
+  }
+});
+
+TestCase('gin.ajax', {
+  'test should be defined': function() {
+    assertObject(gin.ajax);
+  }
+})
+
+
+//TestCase('gin.dom', {
+//  'test should be defined': function() {
+//    assertObject(gin.dom);
+//  },
+//
+//});
