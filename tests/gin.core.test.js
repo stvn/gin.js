@@ -77,6 +77,17 @@ TestCase('gin.Class', {
   }
 });
 
+TestCase('gin.db', {
+  'test should set and get a property in localStore': function() {
+    var testString = 'test',
+        retrievedValue;
+
+    gin.db.set('testString', testString);
+    retrievedValue = gin.db.get('testString');
+    assertEquals(testString, retrievedValue);
+  }
+});
+
 TestCase('gin.enumerable', {
   'test should iterate through collection calling callback using each function': function() {
     var array1 = [1, 2, 3, 4, 5],
@@ -130,19 +141,13 @@ TestCase('gin.enumerable', {
 TestCase('gin.events', {
   'test should be defined': function() {
     assertObject(gin.events);
+  },
+
+  'test should be able to subscribe and publish to a topic': function() {
+    var result;
+    gin.events.subscribe('test/topic', gin.bind(this, function(){ result = 5 }));
+    assertNotEquals(5, result);
+    gin.events.publish('test/topic', [5]);
+    assertEquals(5, result);
   }
 });
-
-TestCase('gin.ajax', {
-  'test should be defined': function() {
-    assertObject(gin.ajax);
-  }
-})
-
-
-//TestCase('gin.dom', {
-//  'test should be defined': function() {
-//    assertObject(gin.dom);
-//  },
-//
-//});
