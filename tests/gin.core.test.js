@@ -3,14 +3,6 @@ TestCase('gin', {
     assertObject(gin);
   },
 
-  'test should have a Class function': function() {
-    assertFunction(gin.Class);
-  },
-
-  'test should have a NS function': function() {
-    assertFunction(gin.ns);
-  },
-
   'test should create an empty object literal that is namespaced': function() {
     gin.ns('test.ns');
     assertObject(test.ns);
@@ -31,24 +23,8 @@ TestCase('gin', {
 });
 
 TestCase('gin.oo', {
-  'test should be an object': function() {
+  'test should be defined': function() {
     assertObject(gin);
-  },
-
-  'test should have a CREATE function': function() {
-    assertFunction(gin.oo.create);
-  },
-
-  'test should have an EXTEND function': function() {
-    assertFunction(gin.oo.extend);
-  },
-
-  'test should have a MIXIN function': function() {
-    assertFunction(gin.oo.mixin);
-  },
-
-  'test should have a _SUPER function': function() {
-    assertFunction(gin.oo._super)
   }
 });
 
@@ -102,34 +78,6 @@ TestCase('gin.Class', {
 });
 
 TestCase('gin.enumerable', {
-  'test should be defined': function() {
-    assertObject(gin.enumerable);
-  },
-
-  'test should have an object Break': function() {
-    assertObject(gin.enumerable.Break);
-  },
-
-  'test should have an EACH function': function() {
-    assertFunction(gin.enumerable.each);
-  },
-
-  'test should have a MAP function': function() {
-    assertFunction(gin.enumerable.map);
-  },
-
-  'test should have a FILTER function': function() {
-    assertFunction(gin.enumerable.filter);
-  },
-
-  'test shoud have a DETECT function': function() {
-    assertFunction(gin.enumerable.detect);
-  },
-
-  'test should have a CHAIN function': function() {
-  
-  },
-
   'test should iterate through collection calling callback using each function': function() {
     var array1 = [1, 2, 3, 4, 5],
         array2 = [];
