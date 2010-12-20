@@ -151,3 +151,30 @@ TestCase('gin.events', {
     assertEquals(5, result);
   }
 });
+
+TestCase('gin.html', {
+  'test should be defined': function () {
+    assertObject(gin.html);
+  },
+
+  'test should create a new html element using new': function () {
+    var toMatch = '<p id="something" class="random" height="50" width="20"></p>'
+    var element = new gin.html.Element('p', {
+          id: 'something',
+          className: 'random',
+          height: 50,
+          width: 20
+        });
+    assertEquals(toMatch, element);
+  },
+
+  'test should create ne html element with children': function () {
+    var toMatch = '<div id="div"><h4 id="h4"></h4><p id="p1"></p><p id="p2"></p></div>';
+    var element = new gin.html.Element('div', {id: 'div'}, [
+          new gin.html.Element('h4', {id: 'h4'}),
+          new gin.html.Element('p', {id: 'p1'}),
+          new gin.html.Element('p', {id: 'p2'})
+        ]);
+    assertEquals(toMatch, element);
+  }
+});
