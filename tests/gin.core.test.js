@@ -19,6 +19,14 @@ TestCase('gin', {
     var obj = new test.ns.B();
     assertEquals(5, obj.prop1);
     assertEquals(6, obj.prop2);
+  },
+
+  'test should merge two objects': function () {
+    var obj1 = {one: 1, two: 2, three: 3},
+        obj2 = {four: 4, five: 5},
+        match = {one: 1, two: 2, three: 3, four: 4, five: 5};
+    gin.merge(obj1, obj2);
+    assertEquals(match, obj1);
   }
 });
 
