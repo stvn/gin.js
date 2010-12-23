@@ -165,16 +165,16 @@ TestCase('gin.html', {
           height: 50,
           width: 20
         });
-    assertEquals(toMatch, element);
+    assertEquals(toMatch, element.html);
   },
 
   'test should create ne html element with children': function () {
     var toMatch = '<div id="div"><h4 id="h4"></h4><p id="p1"></p><p id="p2"></p></div>';
     var element = new gin.html.Element('div', {id: 'div'}, [
-          new gin.html.Element('h4', {id: 'h4'}),
-          new gin.html.Element('p', {id: 'p1'}),
-          new gin.html.Element('p', {id: 'p2'})
+          new gin.html.Element('h4', {id: 'h4'}).html,
+          new gin.html.Element('p', {id: 'p1'}).html,
+          new gin.html.Element('p', {id: 'p2'}).html
         ]);
-    assertEquals(toMatch, element);
+    assertEquals(toMatch, element.html);
   }
 });
