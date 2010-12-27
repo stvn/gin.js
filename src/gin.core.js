@@ -30,7 +30,7 @@
 				if( !original[key] || typeof(original[key]) != 'object' ) {
 					original[key] = {};
 				}
-				ig.merge( original[key], extended[key] );
+				gin.merge( original[key], extended[key] );
 			}
 			else {				
 				original[key] = extended[key];
